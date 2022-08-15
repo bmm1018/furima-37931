@@ -52,7 +52,7 @@
 | Column            | Type     | Option                        |
 |-------------------|----------|-------------------------------|
 |postal_code        |string    |null: false                    |
-|prefectures_id      |integer   |null: false                    |
+|prefectures_id     |integer   |null: false                    |
 |city               |string    |null: false                    |
 |address            |string    |null: false                    |
 |phone_number       |string    |null: false                    |
