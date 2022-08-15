@@ -25,40 +25,39 @@
 |-------------------|----------|-------------------------------|
 |price              |integer   |null: false                    |
 |name               |string    |null: false                    |
-|category           |integer   |null: false                    |
+|category_id        |integer   |null: false                    |
 |explanation        |text      |null: false                    |
-|delivery_time      |integer   |null: false                    |
-|condition          |integer   |null: false                    |
-|shipping_fee       |integer   |null: false                    |
-|prefectures        |integer   |null: false                    |
+|delivery_time_id   |integer   |null: false                    |
+|condition_id       |integer   |null: false                    |
+|shipping_fee_id    |integer   |null: false                    |
+|prefectures_id     |integer   |null: false                    |
 |user               |reference |null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - has_one :buy
 
-## buyテーブル
+## buysテーブル
 
 | Column            | Type     | Option                        |
 |-------------------|----------|-------------------------------|
 |user               |reference |null: false, foreign_key: true |
 |item               |reference |null: false, foreign_key: true |
-|profile            |reference |null: false, foreign_key: true |
 ### Association
 - belongs_to :user
 - belongs_to :item
 - has_one :profile
 
-## profileテーブル
+## profilesテーブル
 | Column            | Type     | Option                        |
 |-------------------|----------|-------------------------------|
-|postal_code        |integer   |null: false                    |
-|prefecture         |integer   |null: false                    |
+|postal_code        |string    |null: false                    |
+|prefecture_id      |integer   |null: false                    |
 |city               |string    |null: false                    |
 |address            |string    |null: false                    |
-|phone_number       |integer   |null: false                    |
-|building           |integer   |                               |
-|user               |reference |null: false, foreign_key: true |
+|phone_number       |string    |null: false                    |
+|building           |string    |                               |
+|buy                |reference |null: false, foreign_key: true |
 
 ### Association
 - belongs_to :buy
