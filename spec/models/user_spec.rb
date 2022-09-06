@@ -7,7 +7,8 @@ RSpec.describe User, type: :model do
 
   describe 'ユーザー登録' do
     context 'ユーザ登録できる場合' do
-      it 'nicknameとemail, encrypted_password, first_name, first_name_kana, last_name, last_name_kana, birthdayがあれば登録できる' do
+      it 'nicknameとemail, password, password_confirmation, first_name, first_name_kana, last_name, last_name_kana, birthdayがあれば登録できる' do
+        @user.valid?
         expect(@user).to be_valid
       end
     end
@@ -27,7 +28,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password can't be blank")
       end
-      it 'epasswordが5文字以下では登録できない' do
+      it 'passwordが5文字以下では登録できない' do
         @user.password = '00000'
         @user.password_confirmation = '00000'
         @user.valid?
@@ -47,7 +48,8 @@ RSpec.describe User, type: :model do
       end
       it '重複したemailが存在する場合は登録できない' do
         @user.save
-        another_user =FactoryBot.build(:user, email: @user.email)
+        another_user = FactoryBot.build(:user)
+        another_user.email = @user.email
         another_user.valid?
         expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
