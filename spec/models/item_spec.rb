@@ -6,7 +6,7 @@ RSpec.describe Item, type: :model do
   end
 
   describe '商品出品' do
-    context '商品登録できる時' do 
+    context '商品登録できる時' do
       it '全ての項目が記載できていれば登録できる' do
         @item.valid?
         expect(@item).to be_valid
@@ -56,12 +56,12 @@ RSpec.describe Item, type: :model do
       it 'priceの300~9999999では登録できない' do
         @item.price = '100'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include('Price is out of setting range')
       end
       it 'priceが半角数字以外では登録できない' do
         @item.price = '１００００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half characters")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half characters')
       end
       it 'imageが空では登録できない' do
         @item.image = nil
