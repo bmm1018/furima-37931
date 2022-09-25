@@ -24,27 +24,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Explanation can't be blank")
       end
       it 'categoryが空では登録できない' do
-        @item.category_id = ''
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
       it 'conditionが空では登録できない' do
-        @item.condition_id = ''
+        @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
       it 'shipping_feeが空では登録できない' do
-        @item.shipping_fee_id = ''
+        @item.shipping_fee_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping fee can't be blank")
       end
       it 'prefecturesが空では登録できない' do
-        @item.prefectures_id = ''
+        @item.prefectures_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefectures can't be blank")
       end
       it 'delivery_timeが空では登録できない' do
-        @item.delivery_time_id = ''
+        @item.delivery_time_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Delivery time can't be blank")
       end
@@ -53,8 +53,13 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
-      it 'priceの300~9999999では登録できない' do
+      it 'priceの299以下では登録できない' do
         @item.price = '100'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is out of setting range')
+      end
+      it 'priceが10000000以上だと登録できない' do
+        @item.price = '10000000'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is out of setting range')
       end
@@ -67,6 +72,11 @@ RSpec.describe Item, type: :model do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
+      it 'ユーザー情報がない場合は登録できないこと' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
     end
   end
