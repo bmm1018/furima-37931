@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :find_params, except: [:index, :new, :create]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :not_current_user, only: [:edit, :update]
+  before_action :not_current_user, only: [:edit, :update, :destroy]
    
 
   def index
