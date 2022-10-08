@@ -11,7 +11,7 @@ const pay = () => {
       number: formData.get("buy_profile[number]"),
       cvc: formData.get("buy_profile[cvc]"),
       exp_month: formData.get("buy_profile[exp_month]"),
-      exp_year: `20${formData.get("buy_profiler[exp_year]")}`,
+      exp_year: `20${formData.get("buy_profile[exp_year]")}`,
     };
 
     Payjp.createToken(card, (status, response) => {

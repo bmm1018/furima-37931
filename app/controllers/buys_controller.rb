@@ -1,14 +1,14 @@
 class BuysController < ApplicationController
+  before_action :find_params, only: [:index, :create]
+  before_action :prevent_url, only: [:index, :create]
+
   def index
-    @item = Item.find(params[:item_id])
-    @buy_profile = BuyProfile.new
+      @buy_profile = BuyProfile.new
   end
   
 
   def create
-    #binding.pry
     @buy_profile = BuyProfile.new(buy_params)
-    @item = Item.find(params[:item_id])
     if @buy_profile.valid?
       pay_item
       @buy_profile.save
@@ -24,11 +24,21 @@ class BuysController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SCRET_KEY"]
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
-        amount: @itemn.price,
+        amount: @item.price,
         card: buy_params[:token],
         currency: 'jpy'
       )
+  end
+
+  def find_params
+    @item = Item.find(params[:item_id])
+  end
+
+  def prevent_url
+    if @item.user_id == current_user.id || @itam.buy != nil
+      redirect_to root_path
+    end
   end
 end
