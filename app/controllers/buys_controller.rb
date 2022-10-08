@@ -17,14 +17,14 @@ class BuysController < ApplicationController
       render 'index'
     end
   end
-  
+
   private
   def buy_params
     params.require(:buy_profile).permit(:postal_code, :prefectures_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:itam_id], token: params[:token])
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_8532042e14dc59b45d00d48b"
+    Payjp.api_key = ENV["PAYJP_SCRET_KEY"]
       Payjp::Charge.create(
         amount: @itemn.price,
         card: buy_params[:token],
