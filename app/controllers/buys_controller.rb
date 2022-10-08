@@ -8,6 +8,7 @@ class BuysController < ApplicationController
   
 
   def create
+
     @buy_profile = BuyProfile.new(buy_params)
     if @buy_profile.valid?
       pay_item
@@ -20,7 +21,7 @@ class BuysController < ApplicationController
 
   private
   def buy_params
-    params.require(:buy_profile).permit(:postal_code, :prefectures_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:itam_id], token: params[:token])
+    params.require(:buy_profile).permit(:postal_code, :prefectures_id, :city, :address, :building, :phone_number, :user_id, :item_id).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
   def pay_item
@@ -37,7 +38,7 @@ class BuysController < ApplicationController
   end
 
   def prevent_url
-    if @item.user_id == current_user.id || @itam.buy != nil
+    if @item.user_id == current_user.id || @item.buy != nil
       redirect_to root_path
     end
   end
