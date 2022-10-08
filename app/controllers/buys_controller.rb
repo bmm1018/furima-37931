@@ -1,5 +1,6 @@
 class BuysController < ApplicationController
   before_action :find_params, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :prevent_url, only: [:index, :create]
 
   def index
