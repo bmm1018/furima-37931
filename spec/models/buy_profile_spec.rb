@@ -4,7 +4,7 @@ RSpec.describe BuyProfile, type: :model do
   describe '購入情報の保存' do
     before do
       @user = FactoryBot.create(:user)
-      @buy_profile = FactoryBot.build(:buy_profile, user_id: @user.id)
+      @buy_profile = FactoryBot.build(:buy_profile, user_id: @user.id, item_id: 2)
     end
 
     context '内容に問題がない場合' do
@@ -65,6 +65,12 @@ RSpec.describe BuyProfile, type: :model do
         @buy_profile.phone_number = "123-456-789"
         @buy_profile.valid?
         expect(@buy_profile.errors.full_messages).to include("Phone number is invalid. Input only number")
+      end
+
+      it 'phone_numberが12文字以上では登録できないこと' do
+        @buy_profile.phone_number = "090123456789"
+        @buy_profile.valid?
+        expect(@buy_profile.errors.full_messages).to include("Phone number is too short")
       end
 
       it 'prefecturesが空では登録できない' do
